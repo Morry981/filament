@@ -13,6 +13,7 @@
     'hrComponent' => 'filament-support::hr',
     'id' => null,
     'openEventName' => 'open-modal',
+    'scrollableContent' => false,
     'slideOver' => false,
     'subheading' => null,
     'subheadingComponent' => 'filament-support::modal.subheading',
@@ -90,6 +91,7 @@
                 $attributes->class([
                     'pointer-events-none relative w-full cursor-pointer transition',
                     'my-auto p-4' => ! $slideOver,
+                    'flex max-h-screen shrink' => $scrollableContent,
                 ])
             }}
         >
@@ -167,7 +169,7 @@
 
                 <div
                     @class([
-                        'flex h-full flex-col' => ($width === 'screen') || $slideOver,
+                        'flex h-full flex-col' => ($width === 'screen') || $slideOver || $scrollableContent,
                     ])
                 >
                     <div class="space-y-2">
@@ -180,6 +182,7 @@
                         @if ($header && ($actions || $heading || $slot->isNotEmpty() || $subheading))
                             <x-dynamic-component
                                 :component="$hrComponent"
+                                :dark-mode="$darkMode"
                                 class="px-2"
                             />
                         @endif
@@ -188,7 +191,7 @@
                     <div
                         @class([
                             'filament-modal-content space-y-2 p-2',
-                            'flex-1 overflow-y-auto' => ($width === 'screen') || $slideOver,
+                            'flex-1 overflow-y-auto' => ($width === 'screen') || $slideOver || $scrollableContent,
                         ])
                     >
                         @if ($heading || $subheading)
@@ -231,6 +234,7 @@
                         @if ($footer && ($actions || $heading || $slot->isNotEmpty() || $subheading))
                             <x-dynamic-component
                                 :component="$hrComponent"
+                                :dark-mode="$darkMode"
                                 class="px-2"
                             />
                         @endif
